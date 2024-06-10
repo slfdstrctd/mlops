@@ -10,9 +10,10 @@
 #
 # All configuration values have a default; values that are commented out
 # serve to show the default.
+from typing import List, Any, Dict
 
-import os
-import sys
+# import os
+# import sys
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -26,7 +27,7 @@ import sys
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = []
+extensions: List[Any] = []
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -41,7 +42,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'mlops'
+project = 'mlops'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -166,10 +167,9 @@ html_static_path = ['_static']
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'mlopsdoc'
 
-
 # -- Options for LaTeX output --------------------------------------------------
 
-latex_elements = {
+latex_elements: Dict[Any, Any] = {
     # The paper size ('letterpaper' or 'a4paper').
     # 'papersize': 'letterpaper',
 
@@ -185,8 +185,8 @@ latex_elements = {
 latex_documents = [
     ('index',
      'mlops.tex',
-     u'mlops Documentation',
-     u"Artem Ponomarenko", 'manual'),
+     'mlops Documentation',
+     "Artem Ponomarenko", 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -215,8 +215,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'mlops', u'mlops Documentation',
-     [u"Artem Ponomarenko"], 1)
+    ('index', 'mlops', 'mlops Documentation',
+     ["Artem Ponomarenko"], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -229,8 +229,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'mlops', u'mlops Documentation',
-     u"Artem Ponomarenko", 'mlops',
+    ('index', 'mlops', 'mlops Documentation',
+     "Artem Ponomarenko", 'mlops',
      'mlops project', 'Miscellaneous'),
 ]
 
