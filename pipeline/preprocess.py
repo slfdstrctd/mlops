@@ -6,7 +6,7 @@ from src.features.build_features import preprocess
 @click.command()
 @click.argument('input_filepath', type=click.Path(exists=True))
 @click.argument('output_filepath', type=click.Path())
-def main(input_filepath, output_filepath):
+def main(input_filepath=None, output_filepath=None):
     """Preprocess the raw data and save the processed data."""
     df = pd.read_csv(input_filepath)
     df_processed = preprocess(df)
@@ -15,4 +15,4 @@ def main(input_filepath, output_filepath):
 
 
 if __name__ == '__main__':
-    main("", "")
+    main()
