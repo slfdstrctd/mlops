@@ -6,7 +6,7 @@ stages:
     - src/features/build_features.py
     - src/models/train_model.py
     outs:
-    - models/catboost_model.cbm
+    - models/catboost_model.cbmQ
   preprocess:
     cmd: python pipeline/preprocess.py data/raw/train.csv data/processed/train_processed.csv
     deps:
