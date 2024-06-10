@@ -3,8 +3,6 @@ import pandas as pd
 from catboost import CatBoostClassifier
 from sklearn.model_selection import train_test_split
 
-from src.features.build_features import preprocess
-
 
 def train_model(df_path):
     df = pd.read_csv(df_path)

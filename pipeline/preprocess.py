@@ -15,4 +15,4 @@ def main(input_filepath, output_filepath):
 
 
 if __name__ == '__main__':
-    main()
+    main("", "")
