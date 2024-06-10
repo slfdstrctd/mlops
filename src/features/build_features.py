@@ -12,9 +12,7 @@ def preprocess(df):
     df['VIP'] = df['VIP'].astype('int')
     df['Cabin_num'] = df['Cabin_num'].astype('int')
 
-    df[['HomePlanet', 'Destination', 'Deck', 'Side']] = (
-        df[['HomePlanet', 'Destination', 'Deck', 'Side']].fillna(value='')
-    )
+    df.dropna(subset=['HomePlanet', 'Destination', 'Deck', 'Side'], inplace=True)
 
     df['HomePlanet'] = df['HomePlanet'].astype('category')
     df['Destination'] = df['Destination'].astype('category')

@@ -1,0 +1,38 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python pipeline/preprocess.py data/raw/train.csv data/processed/train_processed.csv
+    deps:
+    - path: data/raw/train.csv
+      hash: md5
+      md5: 8cf8d6d39aecf7cc6466eb79b0ed6e1b
+      size: 805421
+    - path: pipeline/preprocess.py
+      hash: md5
+      md5: 90715c641fbbd7485f09d2cf0fff8983
+      size: 945
+    outs:
+    - path: data/processed/train_processed.csv
+      hash: md5
+      md5: ba873d6880ac092f2140911c1da92883
+      size: 524228
+  train_model:
+    cmd: python pipeline/train_model.py data/processed/train_processed.csv models/catboost_model.cbm
+    deps:
+    - path: data/processed/train_processed.csv
+      hash: md5
+      md5: ba873d6880ac092f2140911c1da92883
+      size: 524228
+    - path: src/features/build_features.py
+      hash: md5
+      md5: aecd48ea13f439b2be4f7ff046414a8d
+      size: 1034
+    - path: src/models/train_model.py
+      hash: md5
+      md5: 95ef0a20eacddaa9bc7cac956ed255bb
+      size: 2088
+    outs:
+    - path: models/catboost_model.cbm
+      hash: md5
+      md5: 0d1d924639b72c127b9c96869197af56
+      size: 199108
