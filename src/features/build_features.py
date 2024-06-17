@@ -1,5 +1,3 @@
-# import pandas as pd
-
 def preprocess(df):
     df[["Deck", "Cabin_num", "Side"]] = df["Cabin"].str.split("/", expand=True)
 
@@ -19,6 +17,6 @@ def preprocess(df):
     df['Deck'] = df['Deck'].astype('category')
     df['Side'] = df['Side'].astype('category')
 
-    df = df.drop(['Cabin', 'PassengerId', 'Name'], axis=1)
+    df = df.drop(['Cabin', 'Name'], axis=1)  # 'PassengerId',
 
     return df

@@ -5,18 +5,19 @@ import mlflow.catboost
 import numpy as np
 import pandas as pd
 from catboost import CatBoostClassifier
-from sklearn.model_selection import train_test_split
 from dotenv import load_dotenv
+from sklearn.model_selection import train_test_split
 
 load_dotenv()
 
 os.environ["AWS_ACCESS_KEY_ID"] = os.getenv("AWS_ACCESS_KEY_ID")
 os.environ["AWS_SECRET_ACCESS_KEY"] = os.getenv("AWS_SECRET_ACCESS_KEY")
 os.environ["MLFLOW_S3_ENDPOINT_URL"] = os.getenv("MLFLOW_S3_ENDPOINT_URL")
+MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI")
 
 
 def train_model(df_path):
-    mlflow.set_tracking_uri("http://localhost:5000")
+    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
     mlflow.set_experiment("spaceship-titanic")
 
     with mlflow.start_run():
@@ -24,17 +25,14 @@ def train_model(df_path):
 
         df = pd.read_csv(df_path)
 
-        df['HomePlanet'] = df['HomePlanet'].astype('category')
-        df['Destination'] = df['Destination'].astype('category')
-        df['Deck'] = df['Deck'].astype('category')
-        df['Side'] = df['Side'].astype('category')
+        cat_features = ['HomePlanet', 'Destination', 'Deck', 'Side']
+        df[cat_features] = df[cat_features].apply(lambda x: x.astype('category'))
 
         X_train, X_val, y_train, y_val = train_test_split(
-            df.drop('Transported', axis=1),
+            df.drop(['PassengerId', 'Transported'], axis=1),
             df['Transported'],
             test_size=0.2, random_state=42
         )
-        cat_features = np.where(X_train.dtypes == 'category')[0]
 
         best_params = {'iterations': 47,
                        'learning_rate': 0.027583475549166746,
@@ -60,7 +58,7 @@ def train_model(df_path):
 
         clf_model.fit(X_train, y_train, cat_features=cat_features, eval_set=(X_val, y_val))
 
-        mlflow.catboost.log_model(clf_model, "model")
+        mlflow.catboost.log_model(cb_model=clf_model, artifact_path="model", registered_model_name='clf_catboost')
 
         y_pred_val = clf_model.predict(X_val)
         accuracy = np.mean(y_pred_val == y_val)

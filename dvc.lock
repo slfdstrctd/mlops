@@ -1,8 +1,13 @@
 schema: '2.0'
 stages:
   preprocess:
-    cmd: python pipeline/preprocess.py data/raw/train.csv data/processed/train_processed.csv
+    cmd: "python pipeline/preprocess.py data/raw/train.csv data/processed/train_processed.csv\n
+      python pipeline/preprocess.py data/raw/test.csv data/processed/test_processed.csv\n"
     deps:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: 5ded803886f27a2f241763327b14a19e
+      size: 372487
     - path: data/raw/train.csv
       hash: md5
       md5: 8cf8d6d39aecf7cc6466eb79b0ed6e1b
@@ -12,27 +17,47 @@ stages:
       md5: 1ea1dfb043d0f2a9eabbb850a55590e2
       size: 576
     outs:
+    - path: data/processed/test_processed.csv
+      hash: md5
+      md5: 255c620a5cbc9a1f260127a0137973de
+      size: 268043
     - path: data/processed/train_processed.csv
       hash: md5
-      md5: ba873d6880ac092f2140911c1da92883
-      size: 524228
+      md5: 59eab670a240dd4000f86a44df9b5b03
+      size: 589240
   train_model:
     cmd: python pipeline/train_model.py data/processed/train_processed.csv models/catboost_model.cbm
     deps:
     - path: data/processed/train_processed.csv
       hash: md5
-      md5: ba873d6880ac092f2140911c1da92883
-      size: 524228
+      md5: 59eab670a240dd4000f86a44df9b5b03
+      size: 589240
     - path: src/features/build_features.py
       hash: md5
-      md5: 843e55599e5c2ef85f939c58a199cbf5
-      size: 884
+      md5: e6ed7498b7404aece1b7ef4554216db7
+      size: 887
     - path: src/models/train_model.py
       hash: md5
-      md5: e0e13797d0162434435d673bfba629dd
-      size: 2931
+      md5: 4ec02a2e3c2a1179d8abd18a795c011e
+      size: 2871
     outs:
     - path: models/catboost_model.cbm
       hash: md5
-      md5: 8415024eac99c70f1077e05d4f82bec8
+      md5: b9c50a241f7380501fded19156fc3ebe
       size: 40230
+  preprocess-test:
+    cmd: python pipeline/preprocess.py data/raw/test.csv data/processed/test_processed.csv
+    deps:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: 5ded803886f27a2f241763327b14a19e
+      size: 372487
+    - path: pipeline/preprocess.py
+      hash: md5
+      md5: 862f56246fdd2b8c28986e8633aecf79
+      size: 578
+    outs:
+    - path: data/processed/test_processed.csv
+      hash: md5
+      md5: 255c620a5cbc9a1f260127a0137973de
+      size: 268043

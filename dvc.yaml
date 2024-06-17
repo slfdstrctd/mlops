@@ -1,11 +1,15 @@
 stages:
   preprocess:
-    cmd: python pipeline/preprocess.py data/raw/train.csv data/processed/train_processed.csv
+    cmd: |
+      python pipeline/preprocess.py data/raw/train.csv data/processed/train_processed.csv
+      python pipeline/preprocess.py data/raw/test.csv data/processed/test_processed.csv
     deps:
       - data/raw/train.csv
+      - data/raw/test.csv
       - pipeline/preprocess.py
     outs:
       - data/processed/train_processed.csv
+      - data/processed/test_processed.csv
   train_model:
     cmd: python pipeline/train_model.py data/processed/train_processed.csv models/catboost_model.cbm
     deps:
